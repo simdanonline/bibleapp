@@ -9,7 +9,14 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.simdanonline.bibleapp",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "runtimeVersion": {
+        "policy": "appVersion"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -43,6 +50,16 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "69c86e09-c360-4887-9f10-61c9960c9e26"
+      }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/69c86e09-c360-4887-9f10-61c9960c9e26"
+    },
+    "owner": "simdanonline"
   }
 }
