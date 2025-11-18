@@ -38,19 +38,28 @@ export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({
     useState<Verse | null>(null);
   const colors = useThemeColors();
   const scrollViewRef = useRef<ScrollView>(null);
+  const lastDx = useRef(0);
+  
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
-      onMoveShouldSetPanResponder: (_, { dx }) => Math.abs(dx) > 10,
+      onMoveShouldSetPanResponder: (_, { dx, dy }) => {
+        // Only trigger if horizontal movement is greater than vertical
+        return Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10;
+      },
+      onPanResponderMove: (_, { dx }) => {
+        lastDx.current = dx;
+      },
       onPanResponderRelease: (_, { dx }) => {
         // Swipe left (dx < -50) → next chapter
         if (dx < -50) {
           handleNextChapter();
         }
         // Swipe right (dx > 50) → previous chapter
-        if (dx > 50) {
+        else if (dx > 50) {
           handlePreviousChapter();
         }
+        lastDx.current = 0;
       },
     })
   ).current;
