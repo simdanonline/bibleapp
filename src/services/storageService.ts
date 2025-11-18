@@ -10,8 +10,15 @@ class StorageService {
   async addBookmark(bookmark: Bookmark): Promise<void> {
     try {
       const bookmarks = await this.getBookmarks();
+      // Check if bookmark already exists by verseId
+      const exists = bookmarks.some((b) => b.verseId === bookmark.verseId);
+      if (exists) {
+        console.warn(`Bookmark for verse ${bookmark.verseId} already exists`);
+        return;
+      }
       bookmarks.push(bookmark);
       await AsyncStorage.setItem(BOOKMARKS_KEY, JSON.stringify(bookmarks));
+      console.log(`Bookmark added for verse ${bookmark.verseId}`);
     } catch (error) {
       console.error('Error adding bookmark:', error);
       throw error;
@@ -53,8 +60,15 @@ class StorageService {
   async addFavorite(favorite: Favorite): Promise<void> {
     try {
       const favorites = await this.getFavorites();
+      // Check if favorite already exists by verseId
+      const exists = favorites.some((f) => f.verseId === favorite.verseId);
+      if (exists) {
+        console.warn(`Favorite for verse ${favorite.verseId} already exists`);
+        return;
+      }
       favorites.push(favorite);
       await AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+      console.log(`Favorite added for verse ${favorite.verseId}`);
     } catch (error) {
       console.error('Error adding favorite:', error);
       throw error;

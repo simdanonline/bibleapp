@@ -53,7 +53,7 @@ export const LibraryScreen: React.FC = () => {
           onPress={() => setActiveTab('bookmarks')}
         >
           <MaterialCommunityIcons name="bookmark" size={20} color={activeTab === 'bookmarks' ? colors.primary : colors.tertiaryText} />
-          <Text style={[styles.tabLabel, activeTab === 'bookmarks' && { color: colors.primary }]}>
+          <Text style={[styles.tabLabel, { color: colors.tertiaryText }, activeTab === 'bookmarks' && { color: colors.primary }]}>
             Bookmarks ({bookmarks.length})
           </Text>
         </TouchableOpacity>
@@ -63,7 +63,7 @@ export const LibraryScreen: React.FC = () => {
           onPress={() => setActiveTab('favorites')}
         >
           <MaterialCommunityIcons name="heart" size={20} color={activeTab === 'favorites' ? colors.accent : colors.tertiaryText} />
-          <Text style={[styles.tabLabel, activeTab === 'favorites' && { color: colors.accent }]}>
+          <Text style={[styles.tabLabel, { color: colors.tertiaryText } , activeTab === 'favorites' && { color: colors.accent }]}>
             Favorites ({favorites.length})
           </Text>
         </TouchableOpacity>
@@ -73,7 +73,7 @@ export const LibraryScreen: React.FC = () => {
           onPress={() => setActiveTab('notes')}
         >
           <MaterialCommunityIcons name="note" size={20} color={activeTab === 'notes' ? colors.primary : colors.tertiaryText} />
-          <Text style={[styles.tabLabel, activeTab === 'notes' && { color: colors.primary }]}>
+          <Text style={[styles.tabLabel, { color: colors.tertiaryText }, activeTab === 'notes' && { color: colors.primary }]}>
             Notes ({notes.length})
           </Text>
         </TouchableOpacity>
