@@ -2,10 +2,12 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, Share, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Verse, Chapter } from '../types';
+import { Verse, Chapter, CreateNoteRequest } from '../types';
 import bibleService from '../services/bibleService';
 import { useBible } from '../context/BibleContext';
 import { useThemeColors } from '../utils/theme';
+import { NoteButton } from '../components/NoteButton';
+import { NoteInputModal } from '../components/NoteInputModal';
 
 interface ChapterDetailScreenProps {
   bookId?: number;
@@ -16,9 +18,23 @@ interface ChapterDetailScreenProps {
 export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({ bookId, bookName, chapterNumber }) => {
   const [chapter, setChapter] = useState<Chapter | null>(null);
   const [loading, setLoading] = useState(true);
+  const [noteModalVisible, setNoteModalVisible] = useState(false);
+  const [selectedVerseForNote, setSelectedVerseForNote] = useState<Verse | null>(null);
   const colors = useThemeColors();
-  const { currentVersion, isVerseBookmarked, isVerseFavorited, addBookmark, removeBookmark, addFavorite, removeFavorite
- } = useBible();                                                                                                       
+  const {
+    currentVersion,
+    isVerseBookmarked,
+    isVerseFavorited,
+    addBookmark,
+    removeBookmark,
+    addFavorite,
+    removeFavorite,
+    getNoteForVerse,
+    hasNoteForVerse,
+    addNote,
+    updateNote,
+    deleteNote,
+  } = useBible();                                                                                                       
   const loadChapter = useCallback(async () => {
     try {
       setLoading(true);
@@ -72,6 +88,8 @@ export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({ bookId
       {chapter.verses.map((verse) => {
         const isBookmarked = isVerseBookmarked(verse.id);
         const isFavorited = isVerseFavorited(verse.id);
+        const hasNote = hasNoteForVerse(verse.id);
+        const note = getNoteForVerse(verse.id);
 
         const handleToggleBookmark = async () => {
           if (isBookmarked) {
@@ -107,11 +125,16 @@ export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({ bookId
           }
         };
 
+        const handleNotePress = () => {
+          setSelectedVerseForNote(verse);
+          setNoteModalVisible(true);
+        };
+
         return (
           <View key={verse.id} style={[styles.verseContainer, { borderBottomColor: colors.border }]}>
             <View style={styles.verseHeader}>
               <Text style={[styles.verseNumber, { color: colors.primary }]}>{verse.verse}</Text>
-              <View style={styles.verseActions}>
+            <View style={styles.verseActions}>
                 <TouchableOpacity onPress={handleToggleBookmark}>
                   <MaterialCommunityIcons
                     name={isBookmarked ? 'bookmark' : 'bookmark-outline'}
@@ -126,6 +149,7 @@ export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({ bookId
                     color={isFavorited ? colors.accent : colors.tertiaryText}
                   />
                 </TouchableOpacity>
+                <NoteButton hasNote={hasNote} onPress={handleNotePress} size={18} />
                 <TouchableOpacity onPress={() => handleShareVerse(verse)} style={styles.actionSpacing}>
                   <MaterialCommunityIcons name="share-variant" size={18} color={colors.tertiaryText} />
                 </TouchableOpacity>
@@ -136,6 +160,47 @@ export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({ bookId
         );
       })}
       </ScrollView>
+
+      <NoteInputModal
+        visible={noteModalVisible}
+        note={selectedVerseForNote ? getNoteForVerse(selectedVerseForNote.id) || undefined : undefined}
+        onSave={async (data) => {
+          if (selectedVerseForNote) {
+            const note = getNoteForVerse(selectedVerseForNote.id);
+            if (note && 'text' in data && !('verseId' in data)) {
+              // Update mode
+              await updateNote(note.id, data as any);
+            } else {
+              // Create mode
+              await addNote(data as CreateNoteRequest);
+            }
+          }
+        }}
+        onDelete={
+          selectedVerseForNote
+            ? async () => {
+                const note = getNoteForVerse(selectedVerseForNote.id);
+                if (note) {
+                  await deleteNote(note.id);
+                }
+              }
+            : undefined
+        }
+        onCancel={() => {
+          setNoteModalVisible(false);
+          setSelectedVerseForNote(null);
+        }}
+        verseRef={
+          selectedVerseForNote
+            ? {
+                book: selectedVerseForNote.book,
+                chapter: selectedVerseForNote.chapter,
+                verse: selectedVerseForNote.verse,
+                version: currentVersion,
+              }
+            : undefined
+        }
+      />
     </SafeAreaView>
   );
 };

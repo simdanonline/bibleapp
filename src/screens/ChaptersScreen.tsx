@@ -68,7 +68,7 @@ export const ChaptersScreen: React.FC<ChaptersScreenProps> = ({
 
   const renderChapter = ({ item }: { item: number }) => (
     <TouchableOpacity
-      style={styles.chapterButton}
+      style={[styles.chapterButton, { backgroundColor: colors.secondaryBackground }]}
       onPress={() => handleSelectChapter(item)}
     >
       <Text style={[styles.chapterText, { color: colors.text }]}>{item}</Text>
@@ -77,7 +77,7 @@ export const ChaptersScreen: React.FC<ChaptersScreenProps> = ({
 
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]} edges={["top", "left", "right"]}>
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
         <Text style={[styles.header, { color: colors.text }]}>{bookName}</Text>
         <FlatList
           data={chapters}

@@ -21,7 +21,7 @@ export default function RootLayout() {
           <Stack.Screen 
             name="chapters" 
             options={{ 
-              title: 'Back',
+              title: 'Chapters',
               headerBackTitle: 'Back',
             }} 
           />

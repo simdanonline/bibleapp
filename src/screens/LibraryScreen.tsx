@@ -3,13 +3,14 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator }
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { VerseCard } from '../components/VerseCard';
+import { NoteCard } from '../components/NoteCard';
 import { useBible } from '../context/BibleContext';
 import { useThemeColors } from '../utils/theme';
 
-type TabType = 'bookmarks' | 'favorites';
+type TabType = 'bookmarks' | 'favorites' | 'notes';
 
 export const LibraryScreen: React.FC = () => {
-  const { bookmarks, favorites, loadData } = useBible();
+  const { bookmarks, favorites, notes, loadData, deleteNote } = useBible();
   const colors = useThemeColors();
   const [activeTab, setActiveTab] = useState<TabType>('bookmarks');
   const [loading, setLoading] = useState(true);
@@ -29,7 +30,7 @@ export const LibraryScreen: React.FC = () => {
     }
   };
 
-  const data = activeTab === 'bookmarks' ? bookmarks : favorites;
+  const data = activeTab === 'bookmarks' ? bookmarks : activeTab === 'favorites' ? favorites : notes;
 
   if (loading) {
     return (
@@ -66,30 +67,55 @@ export const LibraryScreen: React.FC = () => {
             Favorites ({favorites.length})
           </Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.tab, activeTab === 'notes' && { borderBottomColor: colors.primary }]}
+          onPress={() => setActiveTab('notes')}
+        >
+          <MaterialCommunityIcons name="note" size={20} color={activeTab === 'notes' ? colors.primary : colors.tertiaryText} />
+          <Text style={[styles.tabLabel, activeTab === 'notes' && { color: colors.primary }]}>
+            Notes ({notes.length})
+          </Text>
+        </TouchableOpacity>
       </View>
 
       {data.length === 0 ? (
         <View style={styles.emptyContainer}>
-          <MaterialCommunityIcons name={activeTab === 'bookmarks' ? 'bookmark-outline' : 'heart-outline'} size={48} color={colors.tertiaryText} />
+          <MaterialCommunityIcons
+            name={activeTab === 'bookmarks' ? 'bookmark-outline' : activeTab === 'favorites' ? 'heart-outline' : 'note-outline'}
+            size={48}
+            color={colors.tertiaryText}
+          />
           <Text style={[styles.emptyText, { color: colors.tertiaryText }]}>
-            No {activeTab === 'bookmarks' ? 'bookmarks' : 'favorites'} yet
+            No {activeTab === 'bookmarks' ? 'bookmarks' : activeTab === 'favorites' ? 'favorites' : 'notes'} yet
           </Text>
         </View>
       ) : (
         <FlatList
           data={data}
-          renderItem={({ item }) => (
-            <VerseCard
-              verse={{
-                id: item.verseId,
-                book: item.book,
-                chapter: item.chapter,
-                verse: item.verse,
-                text: item.text,
-              }}
-            />
-          )}
-          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => {
+            if (activeTab === 'notes') {
+              return (
+                <NoteCard
+                  note={item as any}
+                  onPress={() => {}}
+                  onDelete={() => deleteNote((item as any).id)}
+                />
+              );
+            }
+            return (
+              <VerseCard
+                verse={{
+                  id: (item as any).verseId,
+                  book: (item as any).book,
+                  chapter: (item as any).chapter,
+                  verse: (item as any).verse,
+                  text: (item as any).text,
+                }}
+              />
+            );
+          }}
+          keyExtractor={(item) => (item as any).id}
           contentContainerStyle={styles.listContent}
         />
       )}
