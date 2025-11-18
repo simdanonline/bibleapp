@@ -1,13 +1,22 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, Share, Alert, GestureResponderEvent, PanResponder, Animated } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Verse, Chapter, CreateNoteRequest } from '../types';
-import bibleService, { BIBLE_BOOKS } from '../services/bibleService';
-import { useBible } from '../context/BibleContext';
-import { useThemeColors } from '../utils/theme';
-import { NoteButton } from '../components/NoteButton';
-import { NoteInputModal } from '../components/NoteInputModal';
+import React, { useEffect, useState, useCallback, useRef } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  ActivityIndicator,
+  TouchableOpacity,
+  Share,
+  Alert,
+  PanResponder,
+} from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Verse, Chapter, CreateNoteRequest } from "../types";
+import bibleService, { BIBLE_BOOKS } from "../services/bibleService";
+import { useBible } from "../context/BibleContext";
+import { useThemeColors } from "../utils/theme";
+import { NoteButton } from "../components/NoteButton";
+import { NoteInputModal } from "../components/NoteInputModal";
 
 interface ChapterDetailScreenProps {
   bookId?: number;
@@ -16,11 +25,17 @@ interface ChapterDetailScreenProps {
   onChapterChange?: (newChapterNumber: number) => void;
 }
 
-export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({ bookId, bookName, chapterNumber, onChapterChange }) => {
+export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({
+  bookId,
+  bookName,
+  chapterNumber,
+  onChapterChange,
+}) => {
   const [chapter, setChapter] = useState<Chapter | null>(null);
   const [loading, setLoading] = useState(true);
   const [noteModalVisible, setNoteModalVisible] = useState(false);
-  const [selectedVerseForNote, setSelectedVerseForNote] = useState<Verse | null>(null);
+  const [selectedVerseForNote, setSelectedVerseForNote] =
+    useState<Verse | null>(null);
   const colors = useThemeColors();
   const scrollViewRef = useRef<ScrollView>(null);
   const panResponder = useRef(
@@ -64,7 +79,9 @@ export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({ bookId
   // Get next/previous book for edge navigation
   const getNextBook = () => {
     const currentBookIndex = BIBLE_BOOKS.findIndex((b) => b.name === bookName);
-    return currentBookIndex < BIBLE_BOOKS.length - 1 ? BIBLE_BOOKS[currentBookIndex + 1] : null;
+    return currentBookIndex < BIBLE_BOOKS.length - 1
+      ? BIBLE_BOOKS[currentBookIndex + 1]
+      : null;
   };
 
   const getPreviousBook = () => {
@@ -74,32 +91,42 @@ export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({ bookId
 
   const handleNextChapter = () => {
     if (canGoNext) {
+      // Navigate to next chapter in current book
       onChapterChange?.(chapterNumber + 1);
     } else {
+      // At last chapter, need to move to first chapter of next book
       const nextBook = getNextBook();
       if (nextBook) {
-        onChapterChange?.(chapterNumber + 1);
+        // Trigger book change with chapter 1 of next book
+        onChapterChange?.(-1); // Signal to change book
       }
     }
   };
 
   const handlePreviousChapter = () => {
     if (canGoPrevious) {
+      // Navigate to previous chapter in current book
       onChapterChange?.(chapterNumber - 1);
     } else {
+      // At first chapter, need to move to last chapter of previous book
       const prevBook = getPreviousBook();
       if (prevBook) {
-        onChapterChange?.(chapterNumber - 1);
+        // Trigger book change with last chapter of previous book
+        onChapterChange?.(-2); // Signal to change book
       }
     }
-  };                                                                                                       
+  };
   const loadChapter = useCallback(async () => {
     try {
       setLoading(true);
-      const data = await bibleService.getChapters(bookName, chapterNumber, currentVersion);
+      const data = await bibleService.getChapters(
+        bookName,
+        chapterNumber,
+        currentVersion
+      );
       setChapter(data);
     } catch (e) {
-      console.error('Error loading chapter:', e);
+      console.error("Error loading chapter:", e);
     } finally {
       setLoading(false);
     }
@@ -113,10 +140,10 @@ export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({ bookId
     try {
       await Share.share({
         message: `${verse.book} ${verse.chapter}:${verse.verse} - ${verse.text}`,
-        title: 'Share Verse',
+        title: "Share Verse",
       });
     } catch {
-      Alert.alert('Error', 'Failed to share verse');
+      Alert.alert("Error", "Failed to share verse");
     }
   };
 
@@ -131,23 +158,37 @@ export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({ bookId
   if (!chapter) {
     return (
       <View style={styles.centerContainer}>
-        <Text style={[styles.errorText, { color: colors.accent }]}>Failed to load chapter</Text>
+        <Text style={[styles.errorText, { color: colors.accent }]}>
+          Failed to load chapter
+        </Text>
       </View>
     );
   }
 
   return (
-    <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]} edges={['top', 'left', 'right']}>
+    <View style={[styles.safeArea, { backgroundColor: colors.background }]}>
       {/* Chapter Navigation Header */}
-      <View style={[styles.navigationHeader, { backgroundColor: colors.secondaryBackground, borderBottomColor: colors.border }]}>
-        <TouchableOpacity onPress={handlePreviousChapter} disabled={!canGoPrevious} style={styles.navButton}>
+      <View
+        style={[
+          styles.navigationHeader,
+          {
+            backgroundColor: colors.secondaryBackground,
+            borderBottomColor: colors.border,
+          },
+        ]}
+      >
+        <TouchableOpacity
+          onPress={handlePreviousChapter}
+          disabled={!canGoPrevious}
+          style={styles.navButton}
+        >
           <MaterialCommunityIcons
             name="chevron-left"
             size={24}
             color={canGoPrevious ? colors.primary : colors.tertiaryText}
           />
         </TouchableOpacity>
-        
+
         <View style={styles.chapterInfo}>
           <Text style={[styles.chapterTitle, { color: colors.text }]}>
             {chapter?.book} {chapter?.chapter}
@@ -157,7 +198,11 @@ export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({ bookId
           </Text>
         </View>
 
-        <TouchableOpacity onPress={handleNextChapter} disabled={!canGoNext} style={styles.navButton}>
+        <TouchableOpacity
+          onPress={handleNextChapter}
+          disabled={!canGoNext}
+          style={styles.navButton}
+        >
           <MaterialCommunityIcons
             name="chevron-right"
             size={24}
@@ -172,93 +217,118 @@ export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({ bookId
         contentContainerStyle={styles.content}
         {...panResponder.panHandlers}
       >
-        <Text style={[styles.header, { color: colors.text }]}>
-          {chapter?.book} {chapter?.chapter}
-        </Text>
+        {chapter.verses.map((verse) => {
+          const isBookmarked = isVerseBookmarked(verse.id);
+          const isFavorited = isVerseFavorited(verse.id);
+          const hasNote = hasNoteForVerse(verse.id);
 
-      {chapter.verses.map((verse) => {
-        const isBookmarked = isVerseBookmarked(verse.id);
-        const isFavorited = isVerseFavorited(verse.id);
-        const hasNote = hasNoteForVerse(verse.id);
-        const note = getNoteForVerse(verse.id);
+          const handleToggleBookmark = async () => {
+            if (isBookmarked) {
+              await removeBookmark(verse.id);
+            } else {
+              const bookmark = {
+                id: verse.id,
+                verseId: verse.id,
+                book: verse.book,
+                chapter: verse.chapter,
+                verse: verse.verse,
+                text: verse.text,
+                createdAt: new Date().toISOString(),
+              };
+              await addBookmark(bookmark);
+            }
+          };
 
-        const handleToggleBookmark = async () => {
-          if (isBookmarked) {
-            await removeBookmark(verse.id);
-          } else {
-            const bookmark = {
-              id: verse.id,
-              verseId: verse.id,
-              book: verse.book,
-              chapter: verse.chapter,
-              verse: verse.verse,
-              text: verse.text,
-              createdAt: new Date().toISOString(),
-            };
-            await addBookmark(bookmark);
-          }
-        };
+          const handleToggleFavorite = async () => {
+            if (isFavorited) {
+              await removeFavorite(verse.id);
+            } else {
+              const favorite = {
+                id: verse.id,
+                verseId: verse.id,
+                book: verse.book,
+                chapter: verse.chapter,
+                verse: verse.verse,
+                text: verse.text,
+                createdAt: new Date().toISOString(),
+              };
+              await addFavorite(favorite);
+            }
+          };
 
-        const handleToggleFavorite = async () => {
-          if (isFavorited) {
-            await removeFavorite(verse.id);
-          } else {
-            const favorite = {
-              id: verse.id,
-              verseId: verse.id,
-              book: verse.book,
-              chapter: verse.chapter,
-              verse: verse.verse,
-              text: verse.text,
-              createdAt: new Date().toISOString(),
-            };
-            await addFavorite(favorite);
-          }
-        };
+          const handleNotePress = () => {
+            setSelectedVerseForNote(verse);
+            setNoteModalVisible(true);
+          };
 
-        const handleNotePress = () => {
-          setSelectedVerseForNote(verse);
-          setNoteModalVisible(true);
-        };
-
-        return (
-          <View key={verse.id} style={[styles.verseContainer, { borderBottomColor: colors.border }]}>
-            <View style={styles.verseHeader}>
-              <Text style={[styles.verseNumber, { color: colors.primary }]}>{verse.verse}</Text>
-            <View style={styles.verseActions}>
-                <TouchableOpacity onPress={handleToggleBookmark}>
-                  <MaterialCommunityIcons
-                    name={isBookmarked ? 'bookmark' : 'bookmark-outline'}
+          return (
+            <View
+              key={verse.id}
+              style={[
+                styles.verseContainer,
+                { borderBottomColor: colors.border },
+              ]}
+            >
+              <View style={styles.verseHeader}>
+                <Text style={[styles.verseNumber, { color: colors.primary }]}>
+                  {verse.verse}
+                </Text>
+                <View style={styles.verseActions}>
+                  <TouchableOpacity onPress={handleToggleBookmark}>
+                    <MaterialCommunityIcons
+                      name={isBookmarked ? "bookmark" : "bookmark-outline"}
+                      size={18}
+                      color={
+                        isBookmarked ? colors.primary : colors.tertiaryText
+                      }
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={handleToggleFavorite}
+                    style={styles.actionSpacing}
+                  >
+                    <MaterialCommunityIcons
+                      name={isFavorited ? "heart" : "heart-outline"}
+                      size={18}
+                      color={isFavorited ? colors.accent : colors.tertiaryText}
+                    />
+                  </TouchableOpacity>
+                  <NoteButton
+                    hasNote={hasNote}
+                    onPress={handleNotePress}
                     size={18}
-                    color={isBookmarked ? colors.primary : colors.tertiaryText}
                   />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleToggleFavorite} style={styles.actionSpacing}>
-                  <MaterialCommunityIcons
-                    name={isFavorited ? 'heart' : 'heart-outline'}
-                    size={18}
-                    color={isFavorited ? colors.accent : colors.tertiaryText}
-                  />
-                </TouchableOpacity>
-                <NoteButton hasNote={hasNote} onPress={handleNotePress} size={18} />
-                <TouchableOpacity onPress={() => handleShareVerse(verse)} style={styles.actionSpacing}>
-                  <MaterialCommunityIcons name="share-variant" size={18} color={colors.tertiaryText} />
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => handleShareVerse(verse)}
+                    style={styles.actionSpacing}
+                  >
+                    <MaterialCommunityIcons
+                      name="share-variant"
+                      size={18}
+                      color={colors.tertiaryText}
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
+              <Text style={[styles.verseText, { color: colors.text }]}>
+                {verse.text}
+              </Text>
             </View>
-            <Text style={[styles.verseText, { color: colors.text }]}>{verse.text}</Text>
-          </View>
-        );
-      })}
+          );
+        })}
       </ScrollView>
 
       <NoteInputModal
         visible={noteModalVisible}
-        note={selectedVerseForNote ? getNoteForVerse(selectedVerseForNote.id) || undefined : undefined}
+        note={
+          selectedVerseForNote
+            ? getNoteForVerse(selectedVerseForNote.id) || undefined
+            : undefined
+        }
         onSave={async (data) => {
           if (selectedVerseForNote) {
             const note = getNoteForVerse(selectedVerseForNote.id);
-            if (note && 'text' in data && !('verseId' in data)) {
+            if (note && "text" in data && !("verseId" in data)) {
               // Update mode
               await updateNote(note.id, data as any);
             } else {
@@ -292,7 +362,7 @@ export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({ bookId
             : undefined
         }
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -302,13 +372,13 @@ const styles = StyleSheet.create({
   },
   centerContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   navigationHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: 12,
     paddingVertical: 12,
     borderBottomWidth: 1,
@@ -316,15 +386,15 @@ const styles = StyleSheet.create({
   navButton: {
     padding: 8,
     minWidth: 40,
-    alignItems: 'center',
+    alignItems: "center",
   },
   chapterInfo: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
   },
   chapterTitle: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   chapterCounter: {
     fontSize: 12,
@@ -338,7 +408,7 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 16,
   },
   verseContainer: {
@@ -347,17 +417,17 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   verseHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 8,
   },
   verseNumber: {
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   verseActions: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 12,
   },
   actionSpacing: {
