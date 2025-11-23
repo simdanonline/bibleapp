@@ -33,7 +33,16 @@ export default function RootLayout() {
               animation: 'fade',
             }} 
           />
+          <Stack.Screen 
+            name="plan-detail" 
+            options={{ 
+              title: 'Reading Plan',
+              headerBackTitle: 'Back',
+              headerShown: false,
+            }} 
+          />
           <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+          <Stack.Screen name="privacy-policy" options={{ title: 'Privacy Policy' }} />
         </Stack>
         <StatusBar style="auto" />
       </ThemeProvider>

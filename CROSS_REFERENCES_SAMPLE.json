@@ -1,0 +1,260 @@
+{
+  "version": "TSK-1.0",
+  "description": "Treasury of Scripture Knowledge - Cross-references",
+  "lastUpdated": "2025-11-18",
+  "totalReferences": 65000,
+  "stats": {
+    "versesWithReferences": 28500,
+    "avgReferencesPerVerse": 2.28,
+    "categories": ["similar", "parallel", "contrast", "fulfillment", "quoted", "prophecy", "referenced", "related"],
+    "topBooks": ["John", "Romans", "Matthew", "Psalms", "Genesis"]
+  },
+  "data": {
+    "Genesis": {
+      "1": {
+        "1": [
+          {
+            "b": "John",
+            "c": 1,
+            "v": 1,
+            "cat": "similar",
+            "p": "In the beginning was the Word, and the Word was with God, and the Word was God."
+          },
+          {
+            "b": "Proverbs",
+            "c": 8,
+            "v": 22,
+            "cat": "related",
+            "p": "The LORD created me as the beginning of His work, the first of His acts of old."
+          },
+          {
+            "b": "Colossians",
+            "c": 1,
+            "v": 16,
+            "cat": "quoted",
+            "p": "For by him were all things created that are in heaven, and that are in earth..."
+          }
+        ],
+        "2": [
+          {
+            "b": "Exodus",
+            "c": 20,
+            "v": 10,
+            "cat": "related"
+          },
+          {
+            "b": "Luke",
+            "c": 23,
+            "v": 56,
+            "cat": "parallel"
+          }
+        ],
+        "3": [
+          {
+            "b": "Genesis",
+            "c": 49,
+            "v": 10,
+            "cat": "fulfillment",
+            "p": "The scepter shall not depart from Judah, nor a lawgiver from between his feet..."
+          },
+          {
+            "b": "Revelation",
+            "c": 12,
+            "v": 17,
+            "cat": "prophecy"
+          },
+          {
+            "b": "Romans",
+            "c": 5,
+            "v": 12,
+            "cat": "contrast"
+          }
+        ],
+        "26": [
+          {
+            "b": "Genesis",
+            "c": 2,
+            "v": 7,
+            "cat": "related"
+          },
+          {
+            "b": "Psalm",
+            "c": 139,
+            "v": 14,
+            "cat": "similar"
+          }
+        ],
+        "27": [
+          {
+            "b": "Genesis",
+            "c": 2,
+            "v": 7,
+            "cat": "related"
+          },
+          {
+            "b": "Genesis",
+            "c": 5,
+            "v": 1,
+            "cat": "parallel"
+          }
+        ]
+      },
+      "2": {
+        "1": [
+          {
+            "b": "Exodus",
+            "c": 20,
+            "v": 10,
+            "cat": "related"
+          }
+        ],
+        "7": [
+          {
+            "b": "Job",
+            "c": 33,
+            "v": 4,
+            "cat": "similar"
+          },
+          {
+            "b": "1 Corinthians",
+            "c": 15,
+            "v": 45,
+            "cat": "quoted"
+          }
+        ],
+        "8": [
+          {
+            "b": "Psalm",
+            "c": 8,
+            "v": 6,
+            "e": 8,
+            "cat": "parallel"
+          }
+        ]
+      },
+      "3": {
+        "15": [
+          {
+            "b": "Genesis",
+            "c": 49,
+            "v": 10,
+            "cat": "fulfillment"
+          },
+          {
+            "b": "Revelation",
+            "c": 12,
+            "v": 17,
+            "cat": "prophecy"
+          },
+          {
+            "b": "Romans",
+            "c": 5,
+            "v": 12,
+            "cat": "contrast"
+          }
+        ]
+      }
+    },
+    "Exodus": {
+      "1": {
+        "1": [
+          {
+            "b": "Genesis",
+            "c": 46,
+            "v": 27,
+            "cat": "parallel"
+          }
+        ]
+      },
+      "20": {
+        "8": [
+          {
+            "b": "Genesis",
+            "c": 2,
+            "v": 3,
+            "cat": "related"
+          }
+        ],
+        "10": [
+          {
+            "b": "Genesis",
+            "c": 1,
+            "v": 2,
+            "cat": "related"
+          }
+        ],
+        "11": [
+          {
+            "b": "Genesis",
+            "c": 1,
+            "v": 1,
+            "cat": "parallel"
+          }
+        ]
+      }
+    },
+    "John": {
+      "1": {
+        "1": [
+          {
+            "b": "Genesis",
+            "c": 1,
+            "v": 1,
+            "cat": "similar",
+            "p": "In the beginning God created the heaven and the earth."
+          },
+          {
+            "b": "1 John",
+            "c": 1,
+            "v": 1,
+            "cat": "parallel"
+          },
+          {
+            "b": "Colossians",
+            "c": 1,
+            "v": 16,
+            "cat": "quoted"
+          }
+        ],
+        "3": [
+          {
+            "b": "John",
+            "c": 3,
+            "v": 16,
+            "cat": "related"
+          }
+        ],
+        "14": [
+          {
+            "b": "John",
+            "c": 1,
+            "v": 1,
+            "cat": "related"
+          }
+        ]
+      },
+      "3": {
+        "16": [
+          {
+            "b": "John",
+            "c": 1,
+            "v": 14,
+            "cat": "related"
+          },
+          {
+            "b": "Romans",
+            "c": 5,
+            "v": 8,
+            "cat": "parallel"
+          },
+          {
+            "b": "Psalm",
+            "c": 110,
+            "v": 1,
+            "cat": "fulfillment"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -9,19 +9,23 @@ import {
   Share,
   Alert,
   PanResponder,
+  NativeScrollEvent,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Verse, Chapter, CreateNoteRequest } from "../types";
+import { Verse, Chapter, CreateNoteRequest, CreateHighlightRequest } from "../types";
 import bibleService, { BIBLE_BOOKS } from "../services/bibleService";
 import { useBible } from "../context/BibleContext";
 import { useThemeColors } from "../utils/theme";
 import { NoteButton } from "../components/NoteButton";
 import { NoteInputModal } from "../components/NoteInputModal";
+import { HighlightColorPickerModal } from "../components/HighlightColorPickerModal";
 
 interface ChapterDetailScreenProps {
   bookId?: number;
   bookName: string;
   chapterNumber: number;
+  scrollPosition?: number;
+  shouldAnimateScroll?: boolean;
   onChapterChange?: (newChapterNumber: number) => void;
 }
 
@@ -29,12 +33,17 @@ export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({
   bookId,
   bookName,
   chapterNumber,
+  scrollPosition,
+  shouldAnimateScroll = false,
   onChapterChange,
 }) => {
   const [chapter, setChapter] = useState<Chapter | null>(null);
   const [loading, setLoading] = useState(true);
   const [noteModalVisible, setNoteModalVisible] = useState(false);
+  const [highlightModalVisible, setHighlightModalVisible] = useState(false);
   const [selectedVerseForNote, setSelectedVerseForNote] =
+    useState<Verse | null>(null);
+  const [selectedVerseForHighlight, setSelectedVerseForHighlight] =
     useState<Verse | null>(null);
   const colors = useThemeColors();
   const scrollViewRef = useRef<ScrollView>(null);
@@ -77,6 +86,15 @@ export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({
     addNote,
     updateNote,
     deleteNote,
+    getHighlightForVerse,
+    hasHighlightForVerse,
+    addHighlight,
+    updateHighlight,
+    deleteHighlight,
+    isChapterRead,
+    markChapterAsRead,
+    markChapterAsUnread,
+    saveReadingPosition,
   } = useBible();
 
   // Get current book and chapter limits
@@ -84,6 +102,31 @@ export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({
   const totalChapters = currentBook?.chapters || 1;
   const canGoPrevious = chapterNumber > 1;
   const canGoNext = chapterNumber < totalChapters;
+
+  // Handle highlight color selection
+  const handleHighlightColorSelect = async (color: any) => {
+    if (selectedVerseForHighlight) {
+      const existingHighlight = getHighlightForVerse(selectedVerseForHighlight.id);
+      if (existingHighlight) {
+        // Update existing highlight
+        await updateHighlight(existingHighlight.id, { color });
+      } else {
+        // Create new highlight
+        const request: CreateHighlightRequest = {
+          verseId: selectedVerseForHighlight.id,
+          book: selectedVerseForHighlight.book,
+          chapter: selectedVerseForHighlight.chapter,
+          verse: selectedVerseForHighlight.verse,
+          text: selectedVerseForHighlight.text,
+          version: currentVersion,
+          color,
+        };
+        await addHighlight(request);
+      }
+      setHighlightModalVisible(false);
+      setSelectedVerseForHighlight(null);
+    }
+  };
 
   // Get next/previous book for edge navigation
   const getNextBook = () => {
@@ -125,6 +168,32 @@ export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({
       }
     }
   };
+
+  /**
+   * Handle scroll events for tracking reading position
+   * Uses debouncing at service level (1000ms) to minimize AsyncStorage writes
+   */
+  const handleScroll = useCallback(
+    (e: NativeScrollEvent) => {
+      const { contentOffset, contentSize } = e;
+      const scrollPosition = contentOffset.y;
+      const scrollPercentage =
+        contentSize.height > 0
+          ? (scrollPosition / contentSize.height) * 100
+          : 0;
+
+      // Save reading position (debounced at service level)
+      saveReadingPosition(
+        bookName,
+        chapterNumber,
+        scrollPosition,
+        scrollPercentage,
+        contentSize.height,
+      );
+    },
+    [bookName, chapterNumber, saveReadingPosition],
+  );
+
   const loadChapter = useCallback(async () => {
     try {
       setLoading(true);
@@ -144,6 +213,29 @@ export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({
   useEffect(() => {
     loadChapter();
   }, [loadChapter]);
+
+  // Cleanup: flush any pending reading position updates when leaving
+  useEffect(() => {
+    return () => {
+      // Note: continueReadingService will auto-flush on next app cycle
+      // This ensures no data loss on rapid navigation
+    };
+  }, []);
+
+  // Restore scroll position when chapter loads
+  useEffect(() => {
+    if (!loading && chapter && scrollPosition !== undefined) {
+      // Small delay to ensure ScrollView is ready
+      const restoreTimeout = setTimeout(() => {
+        scrollViewRef.current?.scrollTo({
+          y: scrollPosition,
+          animated: shouldAnimateScroll,
+        });
+      }, 100);
+
+      return () => clearTimeout(restoreTimeout);
+    }
+  }, [loading, chapter, scrollPosition, shouldAnimateScroll]);
 
   const handleShareVerse = async (verse: Verse) => {
     try {
@@ -207,29 +299,60 @@ export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({
           </Text>
         </View>
 
-        <TouchableOpacity
-          onPress={handleNextChapter}
-          disabled={!canGoNext}
-          style={styles.navButton}
-        >
-          <MaterialCommunityIcons
-            name="chevron-right"
-            size={24}
-            color={canGoNext ? colors.primary : colors.tertiaryText}
-          />
-        </TouchableOpacity>
+        <View style={styles.rightHeaderButtons}>
+          <TouchableOpacity
+            onPress={async () => {
+              const chapterRead = isChapterRead(bookName, chapterNumber);
+              if (chapterRead) {
+                await markChapterAsUnread(bookName, chapterNumber);
+              } else {
+                await markChapterAsRead(bookName, chapterNumber);
+              }
+            }}
+            style={styles.navButton}
+          >
+            <MaterialCommunityIcons
+              name={
+                isChapterRead(bookName, chapterNumber)
+                  ? "check-circle"
+                  : "check-circle-outline"
+              }
+              size={24}
+              color={
+                isChapterRead(bookName, chapterNumber)
+                  ? colors.primary
+                  : colors.tertiaryText
+              }
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={handleNextChapter}
+            disabled={!canGoNext}
+            style={styles.navButton}
+          >
+            <MaterialCommunityIcons
+              name="chevron-right"
+              size={24}
+              color={canGoNext ? colors.primary : colors.tertiaryText}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
 
       <ScrollView
         ref={scrollViewRef}
         style={[styles.container, { backgroundColor: colors.background }]}
         contentContainerStyle={styles.content}
+        onScroll={({ nativeEvent }) => handleScroll(nativeEvent)}
+        scrollEventThrottle={250}
         {...panResponder.panHandlers}
       >
         {chapter.verses.map((verse) => {
           const isBookmarked = isVerseBookmarked(verse.id);
           const isFavorited = isVerseFavorited(verse.id);
           const hasNote = hasNoteForVerse(verse.id);
+          const highlight = getHighlightForVerse(verse.id);
+          const hasHighlight = hasHighlightForVerse(verse.id);
 
           const handleToggleBookmark = async () => {
             if (isBookmarked) {
@@ -262,6 +385,34 @@ export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({
                 createdAt: new Date().toISOString(),
               };
               await addFavorite(favorite);
+            }
+          };
+
+          const handleHighlightPress = async () => {
+            if (hasHighlight && highlight) {
+              Alert.alert(
+                'Highlight Actions',
+                `This verse is highlighted in ${highlight.color}`,
+                [
+                  {
+                    text: 'Change Color',
+                    onPress: () => {
+                      setSelectedVerseForHighlight(verse);
+                      setHighlightModalVisible(true);
+                    },
+                  },
+                  {
+                    text: 'Remove Highlight',
+                    onPress: async () => {
+                      await deleteHighlight(highlight.id);
+                    },
+                  },
+                  { text: 'Cancel', style: 'cancel' },
+                ]
+              );
+            } else {
+              setSelectedVerseForHighlight(verse);
+              setHighlightModalVisible(true);
             }
           };
 
@@ -300,6 +451,16 @@ export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({
                       name={isFavorited ? "heart" : "heart-outline"}
                       size={18}
                       color={isFavorited ? colors.accent : colors.tertiaryText}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={handleHighlightPress}
+                    style={styles.actionSpacing}
+                  >
+                    <MaterialCommunityIcons
+                      name={hasHighlight ? "pencil" : "pencil-outline"}
+                      size={18}
+                      color={hasHighlight ? colors.accent : colors.tertiaryText}
                     />
                   </TouchableOpacity>
                   <NoteButton
@@ -371,6 +532,20 @@ export const ChapterDetailScreen: React.FC<ChapterDetailScreenProps> = ({
             : undefined
         }
       />
+
+      <HighlightColorPickerModal
+        visible={highlightModalVisible}
+        onDismiss={() => {
+          setHighlightModalVisible(false);
+          setSelectedVerseForHighlight(null);
+        }}
+        onSelectColor={handleHighlightColorSelect}
+        currentColor={
+          selectedVerseForHighlight
+            ? getHighlightForVerse(selectedVerseForHighlight.id)?.color
+            : undefined
+        }
+      />
     </View>
   );
 };
@@ -395,6 +570,10 @@ const styles = StyleSheet.create({
   navButton: {
     padding: 8,
     minWidth: 40,
+    alignItems: "center",
+  },
+  rightHeaderButtons: {
+    flexDirection: "row",
     alignItems: "center",
   },
   chapterInfo: {

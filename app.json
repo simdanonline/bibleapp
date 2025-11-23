@@ -26,7 +26,8 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.simdanonline.bibleapp"
     },
     "web": {
       "output": "static",
@@ -60,6 +61,9 @@
     "updates": {
       "url": "https://u.expo.dev/69c86e09-c360-4887-9f10-61c9960c9e26"
     },
-    "owner": "simdanonline"
+    "owner": "simdanonline",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    }
   }
 }

@@ -1,0 +1,811 @@
+{
+  "plans": [
+    {
+      "id": "plan-30day-ot",
+      "name": "30 Day Old Testament",
+      "description": "Read key portions of the Old Testament in 30 days. Perfect for getting to know the foundational stories and teachings of the Hebrew scriptures.",
+      "duration": 30,
+      "testament": "Old",
+      "difficulty": "Easy",
+      "tags": ["old-testament", "30-days", "beginner", "stories"],
+      "dailyReadings": [
+        {
+          "day": 1,
+          "theme": "Creation",
+          "reflection": "How does the creation story help you understand God's character?",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 1,
+              "title": "God creates the heavens and earth"
+            },
+            {
+              "book": "Genesis",
+              "chapter": 2,
+              "title": "Creation of man and woman"
+            }
+          ]
+        },
+        {
+          "day": 2,
+          "theme": "The Fall",
+          "reflection": "How does sin enter the world, and what are its consequences?",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 3,
+              "title": "The serpent's temptation and humanity's fall"
+            }
+          ]
+        },
+        {
+          "day": 3,
+          "theme": "Cain and Abel, Genealogy",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 4,
+              "startVerse": 1,
+              "endVerse": 16
+            },
+            {
+              "book": "Genesis",
+              "chapter": 5,
+              "title": "Genealogy before the flood"
+            }
+          ]
+        },
+        {
+          "day": 4,
+          "theme": "Noah and the Flood",
+          "reflection": "What does Noah's righteousness teach us about living in a corrupt world?",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 6,
+              "startVerse": 1,
+              "endVerse": 22
+            },
+            {
+              "book": "Genesis",
+              "chapter": 7
+            }
+          ]
+        },
+        {
+          "day": 5,
+          "theme": "Covenant with Noah",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 8,
+              "startVerse": 1,
+              "endVerse": 22
+            },
+            {
+              "book": "Genesis",
+              "chapter": 9,
+              "startVerse": 1,
+              "endVerse": 17
+            }
+          ]
+        },
+        {
+          "day": 6,
+          "theme": "Tower of Babel",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 11,
+              "startVerse": 1,
+              "endVerse": 9
+            }
+          ]
+        },
+        {
+          "day": 7,
+          "theme": "Abraham's Call",
+          "reflection": "What does it mean to trust God's promise when circumstances seem impossible?",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 12,
+              "title": "God's covenant with Abraham"
+            }
+          ]
+        },
+        {
+          "day": 8,
+          "theme": "Abraham and Lot",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 13
+            },
+            {
+              "book": "Genesis",
+              "chapter": 14,
+              "startVerse": 1,
+              "endVerse": 24
+            }
+          ]
+        },
+        {
+          "day": 9,
+          "theme": "Abraham Receives Covenant",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 15
+            }
+          ]
+        },
+        {
+          "day": 10,
+          "theme": "Hagar and Ishmael",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 16
+            }
+          ]
+        },
+        {
+          "day": 11,
+          "theme": "The Covenant Renewed",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 17
+            }
+          ]
+        },
+        {
+          "day": 12,
+          "theme": "Three Visitors and Sodom",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 18,
+              "startVerse": 1,
+              "endVerse": 33
+            },
+            {
+              "book": "Genesis",
+              "chapter": 19,
+              "startVerse": 1,
+              "endVerse": 29
+            }
+          ]
+        },
+        {
+          "day": 13,
+          "theme": "Isaac is Born",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 21,
+              "startVerse": 1,
+              "endVerse": 8
+            }
+          ]
+        },
+        {
+          "day": 14,
+          "theme": "Abraham's Ultimate Test",
+          "reflection": "How does Abraham's faith in Genesis 22 demonstrate obedience to God?",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 22
+            }
+          ]
+        },
+        {
+          "day": 15,
+          "theme": "Isaac and Rebekah",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 24
+            }
+          ]
+        },
+        {
+          "day": 16,
+          "theme": "Jacob and Esau",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 25,
+              "startVerse": 19,
+              "endVerse": 34
+            },
+            {
+              "book": "Genesis",
+              "chapter": 27
+            }
+          ]
+        },
+        {
+          "day": 17,
+          "theme": "Jacob at Bethel",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 28
+            }
+          ]
+        },
+        {
+          "day": 18,
+          "theme": "Jacob and Rachel",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 29
+            }
+          ]
+        },
+        {
+          "day": 19,
+          "theme": "Jacob's Struggle with God",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 32,
+              "startVerse": 22,
+              "endVerse": 32
+            }
+          ]
+        },
+        {
+          "day": 20,
+          "theme": "Joseph's Beginnings",
+          "reflection": "How do we trust God when life seems unjust?",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 37
+            }
+          ]
+        },
+        {
+          "day": 21,
+          "theme": "Joseph in Egypt",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 39
+            }
+          ]
+        },
+        {
+          "day": 22,
+          "theme": "Joseph Interprets Dreams",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 40
+            },
+            {
+              "book": "Genesis",
+              "chapter": 41,
+              "startVerse": 1,
+              "endVerse": 40
+            }
+          ]
+        },
+        {
+          "day": 23,
+          "theme": "Joseph Provides for Egypt",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 41,
+              "startVerse": 41,
+              "endVerse": 57
+            }
+          ]
+        },
+        {
+          "day": 24,
+          "theme": "Joseph Reunites with Family",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 42
+            }
+          ]
+        },
+        {
+          "day": 25,
+          "theme": "Jacob Goes to Egypt",
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 46,
+              "startVerse": 1,
+              "endVerse": 7
+            },
+            {
+              "book": "Genesis",
+              "chapter": 47,
+              "startVerse": 1,
+              "endVerse": 31
+            }
+          ]
+        },
+        {
+          "day": 26,
+          "theme": "Moses is Born",
+          "reflection": "How does God prepare leaders for His purposes?",
+          "passages": [
+            {
+              "book": "Exodus",
+              "chapter": 1
+            },
+            {
+              "book": "Exodus",
+              "chapter": 2,
+              "startVerse": 1,
+              "endVerse": 10
+            }
+          ]
+        },
+        {
+          "day": 27,
+          "theme": "God Calls Moses",
+          "passages": [
+            {
+              "book": "Exodus",
+              "chapter": 3
+            }
+          ]
+        },
+        {
+          "day": 28,
+          "theme": "The Ten Plagues",
+          "passages": [
+            {
+              "book": "Exodus",
+              "chapter": 7,
+              "startVerse": 1,
+              "endVerse": 13
+            },
+            {
+              "book": "Exodus",
+              "chapter": 12,
+              "startVerse": 1,
+              "endVerse": 28
+            }
+          ]
+        },
+        {
+          "day": 29,
+          "theme": "Exodus - The Great Deliverance",
+          "passages": [
+            {
+              "book": "Exodus",
+              "chapter": 12,
+              "startVerse": 29,
+              "endVerse": 42
+            },
+            {
+              "book": "Exodus",
+              "chapter": 14
+            }
+          ]
+        },
+        {
+          "day": 30,
+          "theme": "God Provides in the Wilderness",
+          "passages": [
+            {
+              "book": "Exodus",
+              "chapter": 15,
+              "startVerse": 22,
+              "endVerse": 27
+            },
+            {
+              "book": "Exodus",
+              "chapter": 16
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "plan-90day-nt",
+      "name": "90 Day New Testament",
+      "description": "Experience the complete New Testament in 90 days. Follow Jesus's life, teachings, and the early church's story.",
+      "duration": 90,
+      "testament": "New",
+      "difficulty": "Moderate",
+      "tags": ["new-testament", "90-days", "intermediate", "jesus"],
+      "dailyReadings": [
+        {
+          "day": 1,
+          "theme": "Jesus's Birth and Preparation",
+          "reflection": "What do the birth narratives tell us about Jesus's purpose?",
+          "passages": [
+            {
+              "book": "Matthew",
+              "chapter": 1,
+              "title": "Genealogy and birth of Jesus"
+            },
+            {
+              "book": "Luke",
+              "chapter": 1,
+              "startVerse": 1,
+              "endVerse": 38,
+              "title": "Birth of Jesus predicted"
+            }
+          ]
+        },
+        {
+          "day": 2,
+          "passages": [
+            {
+              "book": "Luke",
+              "chapter": 1,
+              "startVerse": 39,
+              "endVerse": 80
+            },
+            {
+              "book": "Matthew",
+              "chapter": 2,
+              "startVerse": 1,
+              "endVerse": 12
+            }
+          ]
+        },
+        {
+          "day": 3,
+          "passages": [
+            {
+              "book": "Matthew",
+              "chapter": 2,
+              "startVerse": 13,
+              "endVerse": 23
+            },
+            {
+              "book": "Luke",
+              "chapter": 2,
+              "startVerse": 1,
+              "endVerse": 52
+            }
+          ]
+        },
+        {
+          "day": 4,
+          "theme": "John the Baptist",
+          "passages": [
+            {
+              "book": "Matthew",
+              "chapter": 3,
+              "title": "John baptizes Jesus"
+            },
+            {
+              "book": "Mark",
+              "chapter": 1,
+              "startVerse": 1,
+              "endVerse": 11
+            }
+          ]
+        },
+        {
+          "day": 5,
+          "theme": "Jesus's Temptation",
+          "passages": [
+            {
+              "book": "Matthew",
+              "chapter": 4,
+              "startVerse": 1,
+              "endVerse": 11
+            },
+            {
+              "book": "Mark",
+              "chapter": 1,
+              "startVerse": 12,
+              "endVerse": 13
+            }
+          ]
+        },
+        {
+          "day": 6,
+          "theme": "Jesus Begins His Ministry",
+          "passages": [
+            {
+              "book": "John",
+              "chapter": 1,
+              "startVerse": 19,
+              "endVerse": 42
+            },
+            {
+              "book": "John",
+              "chapter": 2,
+              "startVerse": 1,
+              "endVerse": 25
+            }
+          ]
+        },
+        {
+          "day": 7,
+          "theme": "Early Miracles and Disciples",
+          "passages": [
+            {
+              "book": "Mark",
+              "chapter": 1,
+              "startVerse": 16,
+              "endVerse": 34
+            }
+          ]
+        },
+        {
+          "day": 8,
+          "theme": "Healing and Authority",
+          "passages": [
+            {
+              "book": "Mark",
+              "chapter": 1,
+              "startVerse": 35,
+              "endVerse": 45
+            },
+            {
+              "book": "Mark",
+              "chapter": 2,
+              "startVerse": 1,
+              "endVerse": 12
+            }
+          ]
+        },
+        {
+          "day": 9,
+          "theme": "Jesus Calls Matthew and Responds to Critics",
+          "passages": [
+            {
+              "book": "Mark",
+              "chapter": 2,
+              "startVerse": 13,
+              "endVerse": 28
+            }
+          ]
+        },
+        {
+          "day": 10,
+          "theme": "The Sermon on the Mount - Part 1",
+          "reflection": "How does Jesus's teaching challenge conventional morality?",
+          "passages": [
+            {
+              "book": "Matthew",
+              "chapter": 5,
+              "title": "Beatitudes and teachings on righteousness"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "plan-1year-bible",
+      "name": "1 Year Bible",
+      "description": "Read the entire Bible in one year by following this comprehensive daily reading plan. Balanced mix of Old Testament, Psalms, New Testament, and Proverbs.",
+      "duration": 365,
+      "testament": "Complete",
+      "difficulty": "Advanced",
+      "tags": ["complete-bible", "1-year", "comprehensive", "advanced"],
+      "dailyReadings": [
+        {
+          "day": 1,
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 1
+            },
+            {
+              "book": "Genesis",
+              "chapter": 2
+            },
+            {
+              "book": "Psalm",
+              "chapter": 1
+            },
+            {
+              "book": "Matthew",
+              "chapter": 1
+            }
+          ]
+        },
+        {
+          "day": 2,
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 3
+            },
+            {
+              "book": "Genesis",
+              "chapter": 4
+            },
+            {
+              "book": "Psalm",
+              "chapter": 2
+            },
+            {
+              "book": "Matthew",
+              "chapter": 2
+            }
+          ]
+        },
+        {
+          "day": 3,
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 5
+            },
+            {
+              "book": "Genesis",
+              "chapter": 6
+            },
+            {
+              "book": "Psalm",
+              "chapter": 3
+            },
+            {
+              "book": "Matthew",
+              "chapter": 3
+            }
+          ]
+        },
+        {
+          "day": 4,
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 7
+            },
+            {
+              "book": "Genesis",
+              "chapter": 8
+            },
+            {
+              "book": "Psalm",
+              "chapter": 4
+            },
+            {
+              "book": "Matthew",
+              "chapter": 4
+            }
+          ]
+        },
+        {
+          "day": 5,
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 9
+            },
+            {
+              "book": "Genesis",
+              "chapter": 10
+            },
+            {
+              "book": "Psalm",
+              "chapter": 5
+            },
+            {
+              "book": "Matthew",
+              "chapter": 5
+            }
+          ]
+        },
+        {
+          "day": 6,
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 11
+            },
+            {
+              "book": "Genesis",
+              "chapter": 12
+            },
+            {
+              "book": "Psalm",
+              "chapter": 6
+            },
+            {
+              "book": "Matthew",
+              "chapter": 6
+            }
+          ]
+        },
+        {
+          "day": 7,
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 13
+            },
+            {
+              "book": "Genesis",
+              "chapter": 14
+            },
+            {
+              "book": "Psalm",
+              "chapter": 7
+            },
+            {
+              "book": "Matthew",
+              "chapter": 7
+            }
+          ]
+        },
+        {
+          "day": 8,
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 15
+            },
+            {
+              "book": "Genesis",
+              "chapter": 16
+            },
+            {
+              "book": "Psalm",
+              "chapter": 8
+            },
+            {
+              "book": "Matthew",
+              "chapter": 8
+            }
+          ]
+        },
+        {
+          "day": 9,
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 17
+            },
+            {
+              "book": "Genesis",
+              "chapter": 18
+            },
+            {
+              "book": "Psalm",
+              "chapter": 9
+            },
+            {
+              "book": "Matthew",
+              "chapter": 9
+            }
+          ]
+        },
+        {
+          "day": 10,
+          "passages": [
+            {
+              "book": "Genesis",
+              "chapter": 19
+            },
+            {
+              "book": "Genesis",
+              "chapter": 20
+            },
+            {
+              "book": "Psalm",
+              "chapter": 10
+            },
+            {
+              "book": "Matthew",
+              "chapter": 10
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

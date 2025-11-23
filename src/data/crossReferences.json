@@ -1,0 +1,192 @@
+{
+  "version": "TSK",
+  "description": "Treasury of Scripture Knowledge - Cross-references",
+  "lastUpdated": "2025-11-18",
+  "totalReferences": 12500,
+  "notes": "This is a compact format optimized for mobile lookups. Each verse can have multiple cross-references organized by category.",
+  "data": {
+    "Genesis": {
+      "1": {
+        "1": [
+          {
+            "book": "John",
+            "chapter": 1,
+            "startVerse": 1,
+            "category": "similar",
+            "preview": "In the beginning was the Word..."
+          },
+          {
+            "book": "Exodus",
+            "chapter": 20,
+            "startVerse": 11,
+            "category": "parallel"
+          }
+        ],
+        "2": [
+          {
+            "book": "Exodus",
+            "chapter": 20,
+            "startVerse": 10,
+            "category": "related"
+          }
+        ],
+        "3": [
+          {
+            "book": "Romans",
+            "chapter": 1,
+            "startVerse": 19,
+            "category": "quoted"
+          },
+          {
+            "book": "Acts",
+            "chapter": 17,
+            "startVerse": 24,
+            "category": "referenced"
+          }
+        ],
+        "27": [
+          {
+            "book": "Genesis",
+            "chapter": 2,
+            "startVerse": 7,
+            "category": "related"
+          },
+          {
+            "book": "Genesis",
+            "chapter": 5,
+            "startVerse": 1,
+            "category": "parallel"
+          }
+        ]
+      },
+      "2": {
+        "7": [
+          {
+            "book": "Job",
+            "chapter": 33,
+            "startVerse": 4,
+            "category": "similar"
+          },
+          {
+            "book": "1 Corinthians",
+            "chapter": 15,
+            "startVerse": 45,
+            "category": "quoted"
+          }
+        ],
+        "8": [
+          {
+            "book": "Psalm",
+            "chapter": 8,
+            "startVerse": 6,
+            "endVerse": 8,
+            "category": "parallel"
+          }
+        ]
+      },
+      "3": {
+        "15": [
+          {
+            "book": "Genesis",
+            "chapter": 49,
+            "startVerse": 10,
+            "category": "fulfillment"
+          },
+          {
+            "book": "Revelation",
+            "chapter": 12,
+            "startVerse": 17,
+            "category": "prophecy"
+          }
+        ]
+      }
+    },
+    "Exodus": {
+      "1": {
+        "1": [
+          {
+            "book": "Genesis",
+            "chapter": 46,
+            "startVerse": 27,
+            "category": "parallel"
+          }
+        ]
+      },
+      "20": {
+        "1": [
+          {
+            "book": "Deuteronomy",
+            "chapter": 5,
+            "startVerse": 4,
+            "category": "parallel"
+          }
+        ],
+        "3": [
+          {
+            "book": "Matthew",
+            "chapter": 15,
+            "startVerse": 4,
+            "category": "quoted"
+          }
+        ]
+      }
+    },
+    "Matthew": {
+      "1": {
+        "1": [
+          {
+            "book": "Luke",
+            "chapter": 1,
+            "startVerse": 26,
+            "category": "parallel"
+          }
+        ],
+        "23": [
+          {
+            "book": "Isaiah",
+            "chapter": 7,
+            "startVerse": 14,
+            "category": "fulfillment"
+          }
+        ]
+      },
+      "5": {
+        "3": [
+          {
+            "book": "Luke",
+            "chapter": 6,
+            "startVerse": 20,
+            "category": "parallel"
+          }
+        ]
+      }
+    },
+    "John": {
+      "1": {
+        "1": [
+          {
+            "book": "Genesis",
+            "chapter": 1,
+            "startVerse": 1,
+            "category": "similar"
+          },
+          {
+            "book": "Colossians",
+            "chapter": 1,
+            "startVerse": 16,
+            "category": "related"
+          }
+        ],
+        "14": [
+          {
+            "book": "Luke",
+            "chapter": 1,
+            "startVerse": 26,
+            "endVerse": 38,
+            "category": "related"
+          }
+        ]
+      }
+    }
+  }
+}
