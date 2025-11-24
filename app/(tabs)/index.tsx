@@ -1,21 +1,21 @@
+import { ProgressBar } from "@/src/components/ProgressBar";
+import { ResumeReadingCard } from "@/src/components/ResumeReadingCard";
+import { VerseCard } from "@/src/components/VerseCard";
+import { useBible } from "@/src/context/BibleContext";
+import bibleService from "@/src/services/bibleService";
+import { BibleProgress, ResumeCardData, Verse } from "@/src/types";
+import { useThemeColors } from "@/src/utils/theme";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useFocusEffect, useRouter } from "expo-router";
 import React from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
   ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useFocusEffect, useRouter } from "expo-router";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { VerseCard } from "@/src/components/VerseCard";
-import { ResumeReadingCard } from "@/src/components/ResumeReadingCard";
-import { ProgressBar } from "@/src/components/ProgressBar";
-import bibleService from "@/src/services/bibleService";
-import { useBible } from "@/src/context/BibleContext";
-import { Verse, BibleProgress, ResumeCardData } from "@/src/types";
-import { useThemeColors } from "@/src/utils/theme";
 
 export default function HomeScreen() {
   const { currentVersion, getBibleProgress, getResumeCardData } = useBible();
@@ -24,8 +24,14 @@ export default function HomeScreen() {
   const [verseOfDay, setVerseOfDay] = React.useState<Verse | null>(null);
   const [loading, setLoading] = React.useState(true);
   const [recentVerses, setRecentVerses] = React.useState<Verse[]>([]);
-  const [bibleProgress, setBibleProgress] = React.useState<BibleProgress | null>(null);
-  const [resumeCardData, setResumeCardData] = React.useState<ResumeCardData | null>(null);
+  const [bibleProgress, setBibleProgress] =
+    React.useState<BibleProgress | null>(null);
+  const [resumeCardData, setResumeCardData] =
+    React.useState<ResumeCardData | null>(null);
+
+  const goToPrivacyPolicy = () => {
+    router.push("/privacy-policy");
+  };
 
   const loadData = React.useCallback(async () => {
     try {
@@ -127,13 +133,22 @@ export default function HomeScreen() {
           }
           if (item.type === "progress" && bibleProgress) {
             return (
-              <View style={[styles.progressCard, { backgroundColor: colors.secondaryBackground }]}>
+              <View
+                style={[
+                  styles.progressCard,
+                  { backgroundColor: colors.secondaryBackground },
+                ]}
+              >
                 <View style={styles.progressHeader}>
                   <Text style={[styles.progressTitle, { color: colors.text }]}>
                     Reading Progress
                   </Text>
                   <View style={styles.progressStats}>
-                    <MaterialCommunityIcons name="book-check" size={16} color={colors.primary} />
+                    <MaterialCommunityIcons
+                      name="book-check"
+                      size={16}
+                      color={colors.primary}
+                    />
                     <Text style={[styles.progressStat, { color: colors.text }]}>
                       {bibleProgress.booksCompleted}/{bibleProgress.totalBooks}
                     </Text>
@@ -156,7 +171,9 @@ export default function HomeScreen() {
                     <Text style={[styles.statValue, { color: colors.primary }]}>
                       {bibleProgress.chaptersRead}
                     </Text>
-                    <Text style={[styles.statLabel, { color: colors.tertiaryText }]}>
+                    <Text
+                      style={[styles.statLabel, { color: colors.tertiaryText }]}
+                    >
                       Chapters Read
                     </Text>
                   </View>
@@ -165,7 +182,9 @@ export default function HomeScreen() {
                     <Text style={[styles.statValue, { color: colors.primary }]}>
                       {bibleProgress.booksStarted}
                     </Text>
-                    <Text style={[styles.statLabel, { color: colors.tertiaryText }]}>
+                    <Text
+                      style={[styles.statLabel, { color: colors.tertiaryText }]}
+                    >
                       Books Started
                     </Text>
                   </View>
@@ -174,7 +193,9 @@ export default function HomeScreen() {
                     <Text style={[styles.statValue, { color: colors.primary }]}>
                       {bibleProgress.readingStats.chaptersReadToday}
                     </Text>
-                    <Text style={[styles.statLabel, { color: colors.tertiaryText }]}>
+                    <Text
+                      style={[styles.statLabel, { color: colors.tertiaryText }]}
+                    >
                       Today
                     </Text>
                   </View>
@@ -190,6 +211,11 @@ export default function HomeScreen() {
           );
         }}
         keyExtractor={(item, index) => index.toString()}
+        ListFooterComponent={
+          <Text onPress={goToPrivacyPolicy} style={styles.privacyPolicy}>
+            Privacy policy
+          </Text>
+        }
       />
     </SafeAreaView>
   );
@@ -271,5 +297,10 @@ const styles = StyleSheet.create({
     width: 1,
     height: 40,
     backgroundColor: "#E5E7EB",
+  },
+  privacyPolicy: {
+    textAlign: "center",
+    color: "#6366f1",
+    marginBottom: 16,
   },
 });
