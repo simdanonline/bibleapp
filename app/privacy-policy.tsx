@@ -10,7 +10,7 @@ import {
 } from "react-native";
 
 export default function PrivacyPolicy(): JSX.Element {
-  const openEmail = () => Linking.openURL("mailto:hi@simdan.dev");
+  const openEmail = () => Linking.openURL("mailto:support@simdan.dev");
 
   return (
     <>
@@ -140,7 +140,7 @@ export default function PrivacyPolicy(): JSX.Element {
             If you have questions about this Privacy Policy, please contact us
             at:{" "}
             <Text style={styles.link} onPress={openEmail}>
-              hi@simdan.dev
+              support@simdan.dev
             </Text>
           </Text>
         </View>
